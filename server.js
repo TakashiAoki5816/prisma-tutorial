@@ -30,8 +30,22 @@ app.post("/", async (req, res) => {
       body: body,
     }
   });
-
   return res.json(posts);
+});
+
+app.put("/:id", async (req, res) => {
+  const id = req.params.id;
+
+  const { body } = req.body;
+  const updatePost = await prisma.posts.update({
+    where: {
+      id: Number(id),
+    },
+    data: {
+      body: body,
+    },
+  });
+  return res.json(updatePost);
 });
 
 app.listen(PORT, () => {
