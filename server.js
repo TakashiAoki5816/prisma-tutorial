@@ -13,7 +13,6 @@ app.get("/", async (req, res) => {
 
 app.get("/:id", async (req, res) => {
   const id = req.params.id;
-
   const post = await prisma.posts.findUnique({
     where: {
       id: Number(id),
@@ -35,7 +34,6 @@ app.post("/", async (req, res) => {
 
 app.put("/:id", async (req, res) => {
   const id = req.params.id;
-
   const { body } = req.body;
   const updatePost = await prisma.posts.update({
     where: {
@@ -46,6 +44,16 @@ app.put("/:id", async (req, res) => {
     },
   });
   return res.json(updatePost);
+});
+
+app.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  const deletedPost = await prisma.posts.delete({
+    where: {
+      id: Number(id),
+    },
+  });
+  return res.json(deletedPost);
 });
 
 app.listen(PORT, () => {
